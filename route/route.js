@@ -1,13 +1,14 @@
-import { createElement } from "@helium/core.js";
-import { getStore } from "@helium/store.js";
-export default (props => {
+import { createElement } from "@algodomain/core";
+import { getStore } from "@algodomain/store";
+
+export default (props) => {
   return createElement(RouteLoader, {
     page: props.page,
     path: props.path,
-    store: "currentRoute"
+    store: "currentRoute",
   });
-});
-const RouteLoader = props => {
+};
+const RouteLoader = (props) => {
   let currentRoute = getStore("currentRoute");
   function shouldRender() {
     if (currentRoute && props?.path && currentRoute === props.path) {
@@ -16,8 +17,12 @@ const RouteLoader = props => {
       return "";
     }
   }
-  return createElement("span", {
-    updateId: props.updateId,
-    class: "route"
-  }, shouldRender());
+  return createElement(
+    "span",
+    {
+      updateId: props.updateId,
+      class: "route",
+    },
+    shouldRender()
+  );
 };

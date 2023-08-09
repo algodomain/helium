@@ -1,5 +1,5 @@
 {
-  "name": "@helium/route",
+  "name": "@algodomain/route",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -9,6 +9,7 @@
     "build": "babel src/**/*.js -d ."
   },
   "devDependencies": {
+    "@algodomain/babel-plugin-auto-import": "^0.0.2",
     "@babel/cli": "^7.22.9",
     "@babel/core": "^7.22.9",
     "@babel/preset-react": "^7.22.5",
@@ -26,11 +27,14 @@
         }
       ],
       [
-        "@helium/babel-plugin-auto-import"
+        "@algodomain/babel-plugin-auto-import"
       ],
       [
         "dotjs"
       ]
     ]
+  },
+  "dependencies": {
+    "@algodomain/core": "^0.0.1"
   }
 }

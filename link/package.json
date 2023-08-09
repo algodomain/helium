@@ -1,7 +1,7 @@
 {
-  "name": "@helium/link",
+  "name": "@algodomain/link",
   "version": "0.0.1",
-  "description": "Super Lightweight JSX based UI library for complex applications",
+  "description": "Link component for helium project",
   "author": "",
   "license": "ISC",
   "main": "link.js",
@@ -9,6 +9,7 @@
     "build": "babel src/**/*.js -d ."
   },
   "devDependencies": {
+    "@algodomain/babel-plugin-auto-import": "^0.0.2",
     "@babel/cli": "^7.22.9",
     "@babel/core": "^7.22.9",
     "@babel/preset-react": "^7.22.5",
@@ -26,11 +27,14 @@
         }
       ],
       [
-        "@helium/babel-plugin-auto-import"
+        "@algodomain/babel-plugin-auto-import"
       ],
       [
         "dotjs"
       ]
     ]
+  },
+  "dependencies": {
+    "@algodomain/core": "^0.0.1"
   }
 }

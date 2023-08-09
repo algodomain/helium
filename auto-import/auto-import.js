@@ -8,16 +8,16 @@ module.exports = function myCustomImportPlugin({ types: t }) {
         const customImportStatement = t.importDeclaration(
           [
             t.importSpecifier(
-              t.identifier('createElement'),
-              t.identifier('createElement'),
+              t.identifier("createElement"),
+              t.identifier("createElement")
             ),
           ],
-          t.stringLiteral('@helium/core'),
-        )
+          t.stringLiteral("@algodomain/core")
+        );
 
         // Insert the custom import statement at the beginning of the program
-        path.node.body.unshift(customImportStatement)
+        path.node.body.unshift(customImportStatement);
       },
     },
-  }
-}
+  };
+};

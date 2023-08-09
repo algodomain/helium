@@ -1,4 +1,4 @@
-import { getStore } from "./store";
+import { getStore } from "@algodomain/store";
 
 export default (props) => {
   return (

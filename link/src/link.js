@@ -1,4 +1,4 @@
-import { updateStore } from "./store";
+import { updateStore } from "@algodomain/store";
 
 export default (props) => {
   const updateCurrentLink = () => {

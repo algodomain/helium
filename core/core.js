@@ -1,5 +1,4 @@
-import { bindMethod } from "@helium/store.js";
-import { getStore } from "@helium/store.js";
+import { bindMethod, getStore } from "@algodomain/store";
 
 const isEvent = (k, v) => k.startsWith("on") && typeof v === "function";
 const eventName = (k) => k.substr(2).toLowerCase();
