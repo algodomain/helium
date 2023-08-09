@@ -1,0 +1,36 @@
+{
+  "name": "@helium/link",
+  "version": "0.0.1",
+  "description": "Super Lightweight JSX based UI library for complex applications",
+  "author": "",
+  "license": "ISC",
+  "main": "link.js",
+  "scripts": {
+    "build": "babel src/**/*.js -d ."
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/preset-react": "^7.22.5",
+    "babel-plugin-dotjs": "^1.0.0"
+  },
+  "babel": {
+    "ignore": [
+      "node_modules"
+    ],
+    "plugins": [
+      [
+        "@babel/plugin-transform-react-jsx",
+        {
+          "pragma": "createElement"
+        }
+      ],
+      [
+        "@helium/babel-plugin-auto-import"
+      ],
+      [
+        "dotjs"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@helium/babel-plugin-auto-import",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "main": "auto-import.js",
+  "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9"
+  }
+}

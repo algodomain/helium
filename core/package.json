@@ -1,0 +1,8 @@
+{
+  "name": "@helium/core",
+  "version": "0.0.1",
+  "description": "Super Lightweight JSX based UI library for complex applications",
+  "author": "",
+  "license": "ISC",
+  "main": "core.js"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "@helium/store",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "main": "store.js"
+}
