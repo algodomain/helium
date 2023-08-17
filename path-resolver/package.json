@@ -1,0 +1,10 @@
+{
+  "name": "@algodomain/path-resolver",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "resolve-path": "./path-resolver.js"
+  }
+}
