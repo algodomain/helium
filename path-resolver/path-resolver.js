@@ -1,9 +1,10 @@
+#!/usr/bin/env node
+
 const fs = require("fs");
 const path = require("path");
 
-module.exports = () => {
-  walk(process.cwd() + "/dist", 0);
-};
+console.log("running the processing on " + process.cwd());
+walk(process.cwd() + "/dist", 0);
 
 function getParentPath(depth) {
   // Initialize the path with the current directory
@@ -33,7 +34,7 @@ function walk(dir, level) {
   if (fs.statSync(dir).isFile() && path.extname(dir) === ".js") {
     //from "@algodomain
     replaceStringInFile(dir, level);
-    console.log(dir + ": " + level + " : " + getParentPath(level));
+    //console.log(dir + ": " + level + " : " + getParentPath(level));
   }
 
   if (fs.statSync(dir).isDirectory()) {
