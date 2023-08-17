@@ -21,11 +21,14 @@ function replaceStringInFile(filePath, level) {
   let fileContents = fs.readFileSync(filePath, "utf8");
 
   // Replace all occurrences of the string
-  fileContents = fileContents.replace(
-    /from "@algodomain/g,
-    'from "' + getParentPath(level) + "@algodomain"
-  );
-
+  if (filePath.includes("@algodomain")) {
+    fileContents = fileContents.replace(/from "@algodomain/g, 'from ".');
+  } else {
+    fileContents = fileContents.replace(
+      /from "@algodomain/g,
+      'from "' + getParentPath(level) + "@algodomain"
+    );
+  }
   // Write the updated contents back to the file
   fs.writeFileSync(filePath, fileContents);
 }
@@ -38,10 +41,7 @@ function walk(dir, level) {
   }
 
   if (fs.statSync(dir).isDirectory()) {
-    if (
-      path.basename(dir) === "@algodomain" ||
-      path.basename(dir) === "node_modules"
-    ) {
+    if (path.basename(dir) === "node_modules") {
       return;
     }
 
