@@ -4,7 +4,6 @@ module.exports = function myCustomImportPlugin({ types: t }) {
       Program(path, state) {
         // Create the import statement AST node
         const filename = state.file.opts.filename;
-        console.log(filename);
         if (!filename.includes("core.js")) {
           const customImportStatement = t.importDeclaration(
             [

@@ -3,12 +3,12 @@
 const fs = require("fs");
 const path = require("path");
 
-console.log("running the processing on " + process.cwd());
 walk(process.cwd() + "/dist", 0);
 
 let cssFiles = getCSSFiles(process.cwd() + "/src/css");
 fs.mkdir(process.cwd() + "/dist/css", () => {});
 mergeCSSFiles(cssFiles, process.cwd() + "/dist/css/styles.css");
+fs.cp("index.html", "./dist/index.html", () => {});
 
 function getCSSFiles(dir) {
   let files = fs.readdirSync(dir);
@@ -60,9 +60,7 @@ function replaceStringInFile(filePath, level) {
 
 function walk(dir, level) {
   if (fs.statSync(dir).isFile() && path.extname(dir) === ".js") {
-    //from "@algodomain
     replaceStringInFile(dir, level);
-    //console.log(dir + ": " + level + " : " + getParentPath(level));
   }
 
   if (fs.statSync(dir).isDirectory()) {
