@@ -10,6 +10,36 @@ fs.mkdir(process.cwd() + "/dist/css", () => {});
 mergeCSSFiles(cssFiles, process.cwd() + "/dist/css/styles.css");
 fs.cp("index.html", "./dist/index.html", () => {});
 
+replaceStringInJSFiles(
+  process.cwd() + "/dist",
+  path.join(process.cwd() + "/dist", "@algodomain"),
+  "update: true",
+  "updateId: props.updateId"
+);
+
+function replaceStringInJSFiles(dir, excludeDir, searchString, replaceString) {
+  let files = fs.readdirSync(dir);
+  for (let file of files) {
+    let filePath = path.join(dir, file);
+    if (fs.statSync(filePath).isDirectory()) {
+      if (filePath !== excludeDir) {
+        replaceStringInJSFiles(
+          filePath,
+          excludeDir,
+          searchString,
+          replaceString
+        );
+      }
+    } else if (file.endsWith(".js")) {
+      let content = fs.readFileSync(filePath, "utf8");
+      content = content.split(searchString).join(replaceString);
+      fs.writeFileSync(filePath, content);
+    }
+  }
+}
+
+
+
 function getCSSFiles(dir) {
   let files = fs.readdirSync(dir);
   let cssFiles = [];
