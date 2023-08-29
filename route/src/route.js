@@ -21,3 +21,13 @@ const RouteLoader = (props) => {
     </span>
   );
 };
+
+export function navigate() {
+  var referrer = document.referrer;
+  let url = referrer.replace(window.location.href, "/").replace(/\/$/, "");
+  console.log(url);
+  history.replaceState("", "", url);
+  if (url != "") {
+    updateStore("currentRoute", url);
+  }
+}

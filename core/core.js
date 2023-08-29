@@ -49,7 +49,7 @@ function attrs(el, props) {
     }
     // If the key is class, we use classList to add one or many CSS classes
     else if (k === "class") {
-      const classes = Array.isArray(val) ? val : [val];
+      const classes = Array.isArray(val) ? val : val.split(" ");
       el.classList.add(...classes);
     }
     // Of finally, if not class nor event, we set attribute using the setAttribute function.
