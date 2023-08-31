@@ -1,6 +1,6 @@
 {
   "name": "@algodomain/link",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Link component for helium project",
   "author": "",
   "license": "ISC",
@@ -35,6 +35,6 @@
     ]
   },
   "dependencies": {
-    "@algodomain/core": "^0.0.1"
+    "@algodomain/core": "^0.0.2"
   }
 }

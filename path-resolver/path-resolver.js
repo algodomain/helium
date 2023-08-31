@@ -38,8 +38,6 @@ function replaceStringInJSFiles(dir, excludeDir, searchString, replaceString) {
   }
 }
 
-
-
 function getCSSFiles(dir) {
   let files = fs.readdirSync(dir);
   let cssFiles = [];

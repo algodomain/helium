@@ -1,6 +1,6 @@
 {
   "name": "@algodomain/core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Super Lightweight JSX based UI library for complex applications",
   "author": "",
   "license": "ISC",
