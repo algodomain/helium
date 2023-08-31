@@ -1,5 +1,5 @@
 import { createElement } from "@algodomain/core";
-import { getStore } from "@algodomain/store";
+import { getStore, updateStore } from "@algodomain/store";
 
 export default (props) => {
   return createElement(RouteLoader, {

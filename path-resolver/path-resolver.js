@@ -2,6 +2,8 @@
 
 const fs = require("fs");
 const path = require("path");
+const glob = require("glob");
+
 
 walk(process.cwd() + "/dist", 0);
 
@@ -104,3 +106,74 @@ function walk(dir, level) {
     }
   }
 }
+
+const filePattern = "src/*.js";
+const linePattern = /<Route.*/gm;
+
+
+// define callback function
+function findLines(error, files) {
+  // check for error
+  if (error) {
+    console.error(error);
+    return;
+  }
+  // loop over files
+  for (let file of files) {
+    // read file content
+    let content = fs.readFileSync(file, "utf8");
+    // find matching lines
+    let lines = content.match(linePattern);
+    // check if lines are found
+
+    if (lines) {
+      // print or return lines
+      lines.forEach((line) => {
+        let path = getAttributeValue(line, "path");
+        console.log(path);
+        generateRoutingFile("dist" + path);
+      });
+    }
+  }
+}
+
+// call glob function
+
+function getAttributeValue(str, attributeName) {
+  let regex = /\s+(\w+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^><"' \s]+)))?/g;
+  let attributes = {};
+  let match;
+  while ((match = regex.exec(str))) {
+    let name = match[1];
+    let value = match[2] || match[3] || match[4];
+    attributes[name] = value;
+  }
+  let value = attributes[attributeName];
+  if (value) {
+    return value;
+  } else {
+    return null;
+  }
+}
+
+// define the folder name and the file name
+
+function generateRoutingFile(folderName) {
+  const fileName = "index.html";
+  const fileContent = "<script>window.location.href = '/'</script>";
+  fs.mkdir(folderName, { recursive: true }, (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      fs.writeFile(`${folderName}/${fileName}`, fileContent, (err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log("Folder and file created successfully!");
+        }
+      });
+    }
+  });
+}
+
+glob(filePattern, findLines);
