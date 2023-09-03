@@ -20,7 +20,10 @@ function startCopy(outDir) {
       files
         .filter(
           (file) =>
-            !file.toString().includes("path-resolver.js") &&
+            !file.toString().includes("auto-import.js") &&
+            !file.toString().includes("buildAlgo.js") &&
+            !file.toString().includes("buildProj.js") &&
+            !file.toString().includes("source-builder.js") &&
             !file.toString().includes("/src/")
         )
         .forEach((file) => {
