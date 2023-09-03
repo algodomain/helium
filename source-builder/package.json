@@ -1,6 +1,6 @@
 {
-  "name": "@algodomain/source-builder",
-  "version": "0.0.3",
+  "name": "@algodomain/helium",
+  "version": "0.0.1",
   "description": "",
   "author": "",
   "license": "ISC",
@@ -8,10 +8,14 @@
     "buildsrc": "./source-builder.js"
   },
   "dependencies": {
-    "@algodomain/babel-plugin-auto-import": "^0.0.7",
     "@babel/cli": "^7.22.9",
     "@babel/core": "^7.22.9",
     "@babel/preset-react": "^7.22.5",
-    "babel-plugin-dotjs": "^1.0.0"
+    "babel-plugin-dotjs": "^1.0.0",
+    "@algodomain/babel-plugin-auto-import": "^0.0.7",
+    "@algodomain/core": "^0.0.2",
+    "@algodomain/link": "^0.0.2",
+    "@algodomain/route": "^0.0.4",
+    "@algodomain/store": "^0.0.1"
   }
 }
