@@ -1,0 +1,17 @@
+{
+  "name": "@algodomain/source-builder",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "buildsrc": "./source-builder.js"
+  },
+  "devDependencies": {
+    "@algodomain/babel-plugin-auto-import": "^0.0.6",
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/preset-react": "^7.22.5",
+    "babel-plugin-dotjs": "^1.0.0"
+  }
+}

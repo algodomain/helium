@@ -4,7 +4,7 @@ module.exports = function myCustomImportPlugin({ types: t }) {
       Program(path, state) {
         // Create the import statement AST node
         const filename = state.file.opts.filename;
-        if (!filename.includes("core.js")) {
+        if (!filename.includes("@algodomain")) {
           const customImportStatement = t.importDeclaration(
             [
               t.importSpecifier(

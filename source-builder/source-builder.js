@@ -3,21 +3,11 @@
 const fs = require("fs");
 const path = require("path");
 const glob = require("glob");
-
-
-walk(process.cwd() + "/dist", 0);
-
-let cssFiles = getCSSFiles(process.cwd() + "/src/css");
-fs.mkdir(process.cwd() + "/dist/css", () => {});
-mergeCSSFiles(cssFiles, process.cwd() + "/dist/css/styles.css");
-fs.cp("index.html", "./dist/index.html", () => {});
-
-replaceStringInJSFiles(
-  process.cwd() + "/dist",
-  path.join(process.cwd() + "/dist", "@algodomain"),
-  "update: true",
-  "updateId: props.updateId"
-);
+const buildAlgo = require("./buildAlgo");
+const buildProj = require("./buildProj");
+const util = require("util");
+const readFile = util.promisify(fs.readFile);
+const access = util.promisify(fs.access);
 
 function replaceStringInJSFiles(dir, excludeDir, searchString, replaceString) {
   let files = fs.readdirSync(dir);
@@ -107,27 +97,16 @@ function walk(dir, level) {
   }
 }
 
-const filePattern = "src/*.js";
-const linePattern = /<Route.*/gm;
-
-
-// define callback function
-function findLines(error, files) {
-  // check for error
+function generateStaticRouteHtmlFile(error, files) {
   if (error) {
     console.error(error);
     return;
   }
-  // loop over files
   for (let file of files) {
-    // read file content
     let content = fs.readFileSync(file, "utf8");
-    // find matching lines
-    let lines = content.match(linePattern);
-    // check if lines are found
+    let lines = content.match(/<Route.*/gm);
 
     if (lines) {
-      // print or return lines
       lines.forEach((line) => {
         let path = getAttributeValue(line, "path");
         console.log(path);
@@ -136,8 +115,6 @@ function findLines(error, files) {
     }
   }
 }
-
-// call glob function
 
 function getAttributeValue(str, attributeName) {
   let regex = /\s+(\w+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^><"' \s]+)))?/g;
@@ -155,8 +132,6 @@ function getAttributeValue(str, attributeName) {
     return null;
   }
 }
-
-// define the folder name and the file name
 
 function generateRoutingFile(folderName) {
   const fileName = "index.html";
@@ -176,4 +151,76 @@ function generateRoutingFile(folderName) {
   });
 }
 
-glob(filePattern, findLines);
+async function resolvePath() {
+  await waitForDirRemoval("./dist/@algodomain-temp");
+  await waitForString("./dist/buildstatus.txt", countJsFiles("./src"));
+
+  walk(process.cwd() + "/dist", 0);
+
+  let cssFiles = getCSSFiles(process.cwd() + "/src/css");
+  fs.mkdir(process.cwd() + "/dist/css", () => {});
+  mergeCSSFiles(cssFiles, process.cwd() + "/dist/css/styles.css");
+  fs.cp("index.html", "./dist/index.html", () => {});
+
+  replaceStringInJSFiles(
+    process.cwd() + "/dist",
+    path.join(process.cwd() + "/dist", "@algodomain"),
+    "update: true",
+    "updateId: props.updateId"
+  );
+
+  const filePattern = "src/*.js";
+  glob(filePattern, generateStaticRouteHtmlFile);
+}
+
+function countJsFiles(dir) {
+  let count = 0;
+  fs.readdirSync(dir).forEach((file) => {
+    const fullPath = path.join(dir, file);
+    if (fs.lstatSync(fullPath).isDirectory()) {
+      count += countJsFiles(fullPath);
+    } else if (file.endsWith(".js")) {
+      count++;
+    }
+  });
+  return count;
+}
+
+async function waitForString(filePath, count) {
+  let data;
+  do {
+    await waitForFile(filePath);
+    data = fs.readFileSync(filePath, "utf8");
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  } while (!data.split("\n").some((line) => line.length === count));
+}
+
+async function waitForDirRemoval(dir) {
+  while (true) {
+    try {
+      await access(dir, fs.constants.F_OK);
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    } catch (err) {
+      break;
+    }
+  }
+}
+async function waitForFile(filePath) {
+  while (true) {
+    try {
+      await access(filePath, fs.constants.F_OK);
+      break;
+    } catch (err) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+  }
+}
+
+function buildSource() {
+  fs.rmSync("./dist/buildstatus.txt", { force: true });
+  buildAlgo();
+  buildProj();
+  resolvePath();
+}
+
+buildSource();
